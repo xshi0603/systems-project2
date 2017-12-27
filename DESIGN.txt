@@ -1,0 +1,106 @@
+﻿Team Waddles
+Xing Tao Shi, Herman Lin, James Ko
+
+
+Statement
+We are going to recreate the game “Club Penguin” in C. 
+
+
+User Interface
+The UI will be entirely terminal-based. Users will interact with the game through a series of commands. When the game first starts up, the user will be prompted for a nickname. Then it’ll welcome the user to the game and give him/her a list of commands. Commands will allow the user to move around the various rooms and interact with the objects in the room. Commands will include: chatting(to the world or just to the room), moving to a new room, or doing whatever action the room supports. Actions will include simple things such as buying accessories for your character or even mini games such as tic tac toe. Playing mini games will increase your money and buying objects will decrease it. The goal of the game will be to collect all of the objects offered. Eventually we will try to incorporate graphics into this project but if unable to, it will be fully terminal based. 
+
+
+Responsibilities 
+
+
+Xing Tao - will be responsible for the server 
+Herman - will be responsible for the client
+James - will be responsible for the mini games/accessories
+
+
+Work will be redelegated if found one person has too much or too little.
+
+
+Data Structures
+
+
+Room - to keep track to which room you are in we will use a 4 child Tree. Each child is another Tree, one for each direction: up, down, left, right. (We may decide to use 2D Arrays instead if they are easier to work with.)
+
+
+struct room {
+        int id;
+        struct room *up;
+        struct room *down;
+        struct room *left;
+        struct room *right;
+}
+
+
+Character - to keep track of characters and their possessions. 
+
+
+struct character {
+        char name[256];
+        char inventory[256][256];
+        int money;
+}
+
+
+Algorithms
+
+
+The user will be asked to input a name
+This input will be analyzed by the main server and a struct character will be created with that name.
+The user will be placed into a room and asked for input.
+This input will be analyzed by the subserver and the appropriate action will be taken. Here are some scenarios:
+
+
+Talking to room:
+The input will be sent to the subserver where it will then be sent to every player currently in the room. 
+
+
+Talking to world: 
+The input will be sent to the subserver where it will then be sent to the main server where it will be sent to everyone currently online. 
+
+
+Buying an accessory:
+The input will be sent to the subserver where it will then be sent to the main server where it will modify the user’s struct.
+
+
+Playing a game:
+Games will be handled by the subservers.
+
+
+Technical Design
+
+
+Topics from class that will be utilized in this project: 
+
+
+Files - we will utilize a file to keep track of the chat. Before displaying to the terminal, it will write the message to the file with the user’s nickname. Thus, even after exiting the session, there will still be a record of what has been said. 
+
+
+Signals - we will use SIGINT as a way for the character to leave the game, regardless of where they currently are. Even if inside a minigame where the option to leave is not present, you will still be able to forcefully exit.
+
+
+Fork - we will use forking to create subservers. Each subserver will be in charge of one room. They will send information using a unnamed pipe to send information to the main server.
+
+
+Pipes - client will utilize pipes in order to send information to each other. 
+
+
+Shared memory - some minigames will utilize this feature such as tictactoe. The current state of the board will be shared memory with both players being able to modify the board state. 
+
+
+Semaphores - there will be a cap amount of how many players can be in at the same time. In addition, players will have to wait if someone else else is currently writing to the file.
+
+
+Timeline (assuming 1/16/18 due date)
+
+
+1/5/18 - server subserver client relationship
+1/8/18 - ability to move around and buy stuff
+1/9/18 - ability to chat to room & world
+1/12/18 - mini games such as tictactoe finished
+1/15/18 - MVP should be done
+1/16/18 - bugsss
