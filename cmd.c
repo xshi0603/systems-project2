@@ -27,18 +27,54 @@ void handle_help(char** args) {
   print_help_and_exit();
 }
 
+void handle_up(char** args) {
+}
+
+void handle_down(char** args) {
+}
+
+void handle_left(char** args) {
+}
+
+void handle_right(char** args) {
+}
+
+void handle_peek(char** args) {
+}
+
+void handle_chat(char** args) {
+}
+
 char* cmds[] = {
     "help",
+    "up",
+    "down",
+    "left",
+    "right",
+    "peek",
+    "chat",
     NULL
 };
 
 char* cmd_descriptions[] = {
   "Prints help",
+  "Moves up",
+  "Moves down",
+  "Moves left",
+  "Moves right",
+  "Inspect object in front of you",
+  "Enter chat room",
     NULL
 };
 
 cmd_handler handlers[] = {
   handle_help,
+  handle_up,
+  handle_down,
+  handle_left,
+  handle_right,
+  handle_peek,
+  handle_chat,
   NULL
 };
 
