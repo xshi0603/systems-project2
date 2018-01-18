@@ -29,7 +29,7 @@ endif
 all: $(OUTPUT)
 
 # useful for debugging
-# usage: print-VARNAME
+# usage: make print-VARNAME
 print-%:
 	@echo $*=$($*)
 

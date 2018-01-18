@@ -21,5 +21,4 @@ int server_setup();
 int server_connect(int sd);
 int client_setup(char * server);
 
-
 #endif

@@ -4,7 +4,7 @@
 
 #include "cmd.h"
 
-void print_help_and_exit() {
+void print_help() {
   printf("List of commands:\n");
   for (size_t i = 0; ; i++) {
     if (cmds[i] == NULL) {
@@ -12,6 +12,4 @@ void print_help_and_exit() {
     }
     printf("%s - %s\n", cmds[i], cmd_descriptions[i]);
   }
-
-  exit(1);
 }
