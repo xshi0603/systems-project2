@@ -1,0 +1,1 @@
+char* game_peek();

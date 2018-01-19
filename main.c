@@ -4,6 +4,7 @@
 #include <unistd.h>
 
 #include "cmd.h"
+#include "networking.h"
 #include "server_intf.h"
 
 int main() {
@@ -11,7 +12,7 @@ int main() {
     printf("By Team Waddles\n");
 
     printf("Connecting to server...\n");
-    int sockd = server_setup();
+    int sockd = client_setup(TEST_IP);
     set_sockd(sockd);
 
     printf("Type commands to interact with the game. For a list of commands, type \"help\".\n");

@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "game_state.h"
 #include "server_intf.h"
 #include "util.h"
 
@@ -94,10 +95,23 @@ void handle_right(char** args, size_t argc) {
 }
 
 void handle_peek(char** args, size_t argc) {
-  
+  if (argc != 0) {
+    print_help();
+    return;
+  }
+
+  char* peek_result = game_peek();
+  printf("%s\n", peek_result);
+  // No free: peek_result should be computed from a static lookup table.
+  // No need to allocate.
 }
 
 void handle_chat(char** args, size_t argc) {
+  if (argc == 0) {
+    print_help();
+    return;
+  }
+  
   char* message = str_join(" ", args, argc);
   send_chat_message(message);
   free(message);
