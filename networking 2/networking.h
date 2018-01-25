@@ -11,6 +11,8 @@
 #include <errno.h>
 #include <stdio.h>
 #include <fcntl.h>
+#include <ctype.h>
+
 
 #define READ 0
 #define WRITE 1
