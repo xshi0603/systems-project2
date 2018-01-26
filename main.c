@@ -20,7 +20,7 @@ int main() {
     char cmd[512];
     while (1) {
       if (fgets(cmd, sizeof(cmd), stdin) == NULL) {
-	break;
+	    break;
       }
 	
         handle_cmd(cmd);

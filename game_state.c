@@ -1,13 +1,15 @@
 #include "game_state.h"
 
-struct room {
-  // tiles[i][j] gets the game object at (i, j).
-  struct game_object*[][] tiles;
-};
+#include <stddef.h>
 
-struct room current_room;
+// 0 1 2
+// 3 4 5
+// 6 7 8
+//   9
+int current_room;
 
 void game_init() {
+  current_room = 9;
 }
 
 char* game_peek() {

@@ -1,7 +1,6 @@
 #include "networking.h"
 
 int main(int argc, char **argv) {
-
   int server_socket;
   char buffer[BUFFER_SIZE];
 
@@ -14,7 +13,7 @@ int main(int argc, char **argv) {
 
   while (1) {
 
-    printf("enter data: ");
+    printf("chat> ");
     //the above printf does not have \n
     //flush the buffer to immediately print
     fflush(stdout);
@@ -33,7 +32,7 @@ int main(int argc, char **argv) {
       *strchr(buffer, '\n') = 0;
       write(server_socket, buffer, sizeof(buffer));
       read(server_socket, buffer, sizeof(buffer));
-      printf("received: [%s]\n", buffer);
+      printf("%s\n", buffer);
     }//end stdin select
 
     //currently the server is not set up to
@@ -42,7 +41,7 @@ int main(int argc, char **argv) {
     if (FD_ISSET(server_socket, &read_fds)) {
       read(server_socket, buffer, sizeof(buffer));
       printf("[other user] [%s]\n", buffer);
-      printf("enter data: ");
+      printf("chat> ");
       //the above printf does not have \n
       //flush the buffer to immediately print
       fflush(stdout);
