@@ -34,3 +34,4 @@ Afterwards, you can type into your server to broadcast a message to all the clie
 **Known Bugs**
 - sigint stops the program despite having a sighandler which does nothing
 - unable to disconnect individual clients, must exit on server to disconnect everyone
+- when using "/all" user does not appear
