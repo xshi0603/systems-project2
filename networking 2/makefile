@@ -34,3 +34,5 @@ clean:
 	rm *~
 	rm client
 	rm server
+	rm WKP*
+	rm a.out

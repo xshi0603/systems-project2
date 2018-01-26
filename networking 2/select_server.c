@@ -136,6 +136,11 @@ int main() {
 
     if (FD_ISSET(c2s0, &read_fds)) {
       read(c2s0, buffer, sizeof(buffer));
+
+      char subbuff[5];
+      memcpy( subbuff, buffer, 4 );
+      subbuff[4] = '\0';
+
       printf("[main] reading from pipe: %s\n", buffer);
       if (strstr(buffer, "moving") != NULL){
 	printf("[main0] MOVING writing to clientz: %s\n", buffer);
@@ -146,15 +151,24 @@ int main() {
 	int y = atoi(stuff[0]);//subserver id
 	int y2 = atoi(stuff[2]);//room id
 
-	printf("%d = ", y2);
-	subservers[y][2] = 0;
+	//printf("%d = ", y2);
+	//subservers[y][2] = 0;
 	subservers[y][2] = y2;
-	printf("%d\n", subservers[y][2]);
+	//printf("%d\n", subservers[y][2]);
 
 	for (i = 0; i < subserver_count; i++) {
 	  if (subservers[i][2] == 0) {
-	    write (subservers[i][WRITE], "someone has moved rooms\n" , sizeof("someone has moved rooms\n"));
+	    write (subservers[i][WRITE], "Someone has joined this room\n" , sizeof("Someone has joined this room\n"));
 	  }
+	}
+      }
+
+      else if (!strcmp(subbuff, "/all")) {
+	char subbuff2[BUFFER_SIZE - 5];
+	memcpy( subbuff2, &buffer[5], sizeof(subbuff2));
+	subbuff2[strlen(subbuff2)] = 0;
+	for (i = 0; i < subserver_count; i++) {
+	  write (subservers[i][WRITE], subbuff2, sizeof(subbuff2));
 	}
       }
 
@@ -170,6 +184,11 @@ int main() {
 
     if (FD_ISSET(c2s1, &read_fds)) {
       read(c2s1, buffer, sizeof(buffer));
+
+      char subbuff[5];
+      memcpy( subbuff, buffer, 4 );
+      subbuff[4] = '\0';
+
       printf("[main] reading from pipe: %s\n", buffer);
       if (strstr(buffer, "moving") != NULL){
 	printf("[main1] MOVING writing to clientz: %s\n", buffer);
@@ -180,17 +199,27 @@ int main() {
 	int y = atoi(stuff[0]);//room id
 	int y2 = atoi(stuff[2]);//subserver id
 
-	printf("%d = ", y2);
-	subservers[y][2] = 0;
+	//printf("%d = ", y2);
+	//subservers[y][2] = 0;
 	subservers[y][2] = y2;
-	printf("%d\n", subservers[y][2]);
+	//printf("%d\n", subservers[y][2]);
 
 	for (i = 0; i < subserver_count; i++) {
 	  if (subservers[i][2] == 1) {
-	    write (subservers[i][WRITE], "someone has moved rooms\n" , sizeof("someone has moved rooms\n"));
+	    write (subservers[i][WRITE], "Someone has joined this room\n" , sizeof("Someone has joined this room\n"));
 	  }
 	}
       }
+
+      else if (!strcmp(subbuff, "/all")) {
+	char subbuff2[BUFFER_SIZE - 5];
+	memcpy( subbuff2, &buffer[5], sizeof(subbuff2));
+	subbuff2[strlen(subbuff2)] = 0;
+	for (i = 0; i < subserver_count; i++) {
+	  write (subservers[i][WRITE], subbuff2, sizeof(subbuff2));
+	}
+      }
+
 
       else {
 	printf("[main] writing to clients: %s\n", buffer);
@@ -203,6 +232,11 @@ int main() {
     }//end pipe select  
 
     if (FD_ISSET(c2s2, &read_fds)) {
+
+      char subbuff[5];
+      memcpy( subbuff, buffer, 4 );
+      subbuff[4] = '\0';
+
       read(c2s2, buffer, sizeof(buffer));
       printf("[main] reading from pipe: %s\n", buffer);
       if (strstr(buffer, "moving") != NULL){
@@ -214,15 +248,24 @@ int main() {
 	int y = atoi(stuff[0]);//room id
 	int y2 = atoi(stuff[2]);//subserver id
 
-	printf("%d = ", y2);
-	subservers[y][2] = 0;
+	//printf("%d = ", y2);
+	//subservers[y][2] = 0;
 	subservers[y][2] = y2;
-	printf("%d\n", subservers[y][2]);
+	//printf("%d\n", subservers[y][2]);
 
 	for (i = 0; i < subserver_count; i++) {	  
 	  if (subservers[i][2] == 2) {
-	    write (subservers[i][WRITE], "someone has moved rooms\n" , sizeof("someone has moved rooms\n"));
+	    write (subservers[i][WRITE], "Someone has joined this room\n" , sizeof("Someone has joined this room\n"));
 	  }
+	}
+      }
+
+      else if (!strcmp(subbuff, "/all")) {	
+	char subbuff2[BUFFER_SIZE - 5];
+	memcpy( subbuff2, &buffer[5], sizeof(subbuff2));
+	subbuff2[strlen(subbuff2)] = 0;
+	for (i = 0; i < subserver_count; i++) {
+	  write (subservers[i][WRITE], subbuff, sizeof(subbuff2));
 	}
       }
 
