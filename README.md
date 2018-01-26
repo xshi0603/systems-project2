@@ -36,3 +36,9 @@ Afterwards, you can type into your server to broadcast a message to all the clie
 - unable to disconnect individual clients, must exit on server to disconnect everyone
 - when using "/all" user does not appear
 - sometimes "/all" will print /all + msg
+
+
+**Didn't Get To**
+- working over internet
+- further room functions (such as minigames)
+- currency (shopping)
