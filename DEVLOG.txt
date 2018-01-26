@@ -17,3 +17,7 @@ created DESIGNDOC
 xingtaoShi -- 2018-01-25 16:35:17
 hello
 
+xingtaoShi -- 2018-01-25 20:00:42
+changed makefile and added all chat
+
+
