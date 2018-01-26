@@ -14,13 +14,43 @@ made log.sh
 xingtaoS -- 2017-12-27 01:47:56
 created DESIGNDOC
 
+jamesKo -- 2018-01-09 16:35:17
+made testing sample code
+
+jamesKo -- 2018-01-10 15:33:27
+made more testing sample code
+
+jamesKo -- 2018-01-12 17:55:57
+finished testing sample code
+
+xingtaoShi -- 2018-01-17 16:35:17
+modified dw code
+
+hermanLin -- 2018-01-17 16:37:27
+worked w/ xing
+
+hermanLin -- 2018-01-18 16:47:37
+networking stuff
+
+jamesKo -- 2018-01-12 14:52:37
+added to testing sample code
+
 xingtaoShi -- 2018-01-25 16:35:17
-hello
+broadcasting
 
-xingtaoShi -- 2018-01-25 20:00:42
+hermanLin -- 2018-01-25 16:35:17
+created rooms
+
+xingtaoShi -- 2018-01-25 
+created client -> room chat
+added moving rooms
 changed makefile and added all chat
-
-
-xingtaoShi -- 2018-01-25 22:11:02
 made username
+
+hermanLin -- 2018-01-25 
+created client -> client chatting
+
+jamesKo -- 2018-01-25 
+made skipping
+
 
