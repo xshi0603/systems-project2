@@ -127,9 +127,20 @@ int main() {
     if (FD_ISSET(STDIN_FILENO, &read_fds)) {
       //if you don't read from stdin, it will continue to trigger select()
       fgets(buffer, sizeof(buffer), stdin);
+      *strchr(buffer, '\n') = 0;
       //printf("[server] subserver count: %d\n", subserver_count);
-      for (i = 0; i < subserver_count; i++) {
-	write (subservers[i][WRITE], buffer, sizeof(buffer));
+      if (!strcmp(buffer, "exit")) {//close all
+	printf("exiting\n");
+	for (i = 0; i < subserver_count; i++) {
+	  write (subservers[i][WRITE], buffer, sizeof(buffer));
+	} 
+	//sleep(3);
+	exit(0);
+      }
+      else {
+	for (i = 0; i < subserver_count; i++) {
+	  write (subservers[i][WRITE], buffer, sizeof(buffer));
+	}
       }
     }//end stdin select
 
@@ -319,8 +330,14 @@ void subserver(int client_socket, int pipe1[], struct room* currRoom, int id) {
     if (FD_ISSET(pipe1[READ], &read_fds)) {
       
       read(pipe1[READ], buffer, sizeof(buffer));
-      //printf("[SUBSERVER pipe] %s\n", buffer);
-      write(client_socket, buffer, sizeof(buffer));
+      
+      if (!strcmp(buffer, "exit")) {
+	write(client_socket, buffer, sizeof(buffer));
+	exit(0);
+      }
+      else {
+	write(client_socket, buffer, sizeof(buffer));
+      }
 
     }//end pipe select
     
@@ -334,11 +351,16 @@ void subserver(int client_socket, int pipe1[], struct room* currRoom, int id) {
 	sprintf(buffer2, "%d_moving_%d", id, currRoom->id);
 	write(pipe2, buffer2, sizeof(buffer2));
       }
-      if (!strcmp(buffer, "right")) {
+      else if (!strcmp(buffer, "right")) {
 	currRoom = moveRooms(currRoom, 2);
 	pipe2 = currRoom->writingPipe;
 	sprintf(buffer2, "%d_moving_%d", id, currRoom->id);
 	write(pipe2, buffer2, sizeof(buffer2));
+      }
+      else if (!strcmp(buffer, "exit")) {
+	sprintf(buffer2, "ignore this");
+	write(pipe2, buffer2, sizeof(buffer2));
+	exit(0);
       }
       else {
 	//printf("[subserver %d] received: [%s]\n", getpid(), buffer);

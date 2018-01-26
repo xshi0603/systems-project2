@@ -30,9 +30,16 @@ int main(int argc, char **argv) {
     if (FD_ISSET(STDIN_FILENO, &read_fds)) {
       fgets(buffer, sizeof(buffer), stdin);
       *strchr(buffer, '\n') = 0;
-      write(server_socket, buffer, sizeof(buffer));
-      read(server_socket, buffer, sizeof(buffer));
-      printf("%s\n", buffer);
+      
+      if (!strcmp(buffer, "exit")) {
+	write(server_socket, buffer, sizeof(buffer));
+	exit(0);
+      }
+      else {
+	write(server_socket, buffer, sizeof(buffer));
+	read(server_socket, buffer, sizeof(buffer));
+	printf("%s\n", buffer);
+      }
     }//end stdin select
 
     //currently the server is not set up to
@@ -40,12 +47,16 @@ int main(int argc, char **argv) {
     //this would allow for broadcast messages
     if (FD_ISSET(server_socket, &read_fds)) {
       read(server_socket, buffer, sizeof(buffer));
-      printf("%s\n", buffer);
-      printf("chat> ");
-      //the above printf does not have \n
-      //flush the buffer to immediately print
-      fflush(stdout);
-    }//end socket select
-
-  }//end loop
+      if (!strcmp(buffer, "exit")) {
+	  exit(0);
+      }
+      else {
+	printf("[other user] [%s]\n", buffer);
+	printf("chat> ");
+	//the above printf does not have \n
+	//flush the buffer to immediately print
+	fflush(stdout);
+      }//end socket select       
+    }//end loop
+  }
 }
