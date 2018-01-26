@@ -16,9 +16,9 @@ networking.o: networking.c networking.h
 	gcc -c networking.c
 
 clean:
-	rm *.o
-	rm *~
-	rm client
-	rm server
-	rm WKP*
-	rm a.out
+	rm -f *.o
+	rm -f *~
+	rm -f client
+	rm -f server
+	rm -f WKP*
+	rm -f a.out

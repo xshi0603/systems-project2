@@ -141,9 +141,9 @@ int main() {
       memcpy( subbuff, buffer, 4 );
       subbuff[4] = '\0';
 
-      printf("[main] reading from pipe: %s\n", buffer);
+      //printf("[main] reading from pipe: %s\n", buffer);
       if (strstr(buffer, "moving") != NULL){
-	printf("[main0] MOVING writing to clientz: %s\n", buffer);
+	//printf("[main0] MOVING writing to clientz: %s\n", buffer);
 	//change room of dude
 
 	char ** stuff = parse_args(buffer, "_");
@@ -189,9 +189,9 @@ int main() {
       memcpy( subbuff, buffer, 4 );
       subbuff[4] = '\0';
 
-      printf("[main] reading from pipe: %s\n", buffer);
+      //printf("[main] reading from pipe: %s\n", buffer);
       if (strstr(buffer, "moving") != NULL){
-	printf("[main1] MOVING writing to clientz: %s\n", buffer);
+	//printf("[main1] MOVING writing to clientz: %s\n", buffer);
 	//change room of dude
 
 	char ** stuff = parse_args(buffer, "_");
@@ -238,9 +238,9 @@ int main() {
       subbuff[4] = '\0';
 
       read(c2s2, buffer, sizeof(buffer));
-      printf("[main] reading from pipe: %s\n", buffer);
+      //printf("[main] reading from pipe: %s\n", buffer);
       if (strstr(buffer, "moving") != NULL){
-	printf("[main2] MOVING writing to clientz: %s\n", buffer);
+	//printf("[main2] MOVING writing to clientz: %s\n", buffer);
 	//change room of dude
 
 	char ** stuff = parse_args(buffer, "_");
@@ -341,14 +341,14 @@ void subserver(int client_socket, int pipe1[], struct room* currRoom, int id) {
 	write(pipe2, buffer2, sizeof(buffer2));
       }
       else {
-	printf("[subserver %d] received: [%s]\n", getpid(), buffer);
+	//printf("[subserver %d] received: [%s]\n", getpid(), buffer);
 	//printf("[subserver]: sending to client:%d\n", client_socket);
 	//process(buffer);
 	
 	//write(client_socket, buffer, sizeof(buffer));
 	//blocks here? 
 	
-	printf("[subserver %d] writing to mainserver\n", getpid());
+	//printf("[subserver %d] writing to mainserver\n", getpid());
 	write(pipe2, buffer, sizeof(buffer)); //problem?
       }
     }//end client select
