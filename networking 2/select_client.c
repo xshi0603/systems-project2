@@ -25,7 +25,10 @@ int main(int argc, char **argv) {
     FD_SET(server_socket, &read_fds); //add socket to fd set
 
     //select will block until either fd is ready
-    select(server_socket + 1, &read_fds, NULL, NULL, NULL);
+    if (select(server_socket + 1, &read_fds, NULL, NULL, NULL) == -1) {
+      printf("There was an error with the server.\n");
+      exit(1);
+    }
 
     if (FD_ISSET(STDIN_FILENO, &read_fds)) {
       fgets(buffer, sizeof(buffer), stdin);
@@ -51,7 +54,7 @@ int main(int argc, char **argv) {
 	  exit(0);
       }
       else {
-	printf("[other user] [%s]\n", buffer);
+	printf("%s\n", buffer);
 	printf("chat> ");
 	//the above printf does not have \n
 	//flush the buffer to immediately print
