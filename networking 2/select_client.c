@@ -54,11 +54,8 @@ int main(int argc, char **argv) {
 	  exit(0);
       }
       else {
-	printf("%s\n", buffer);
-	printf("chat> ");
-	//the above printf does not have \n
-	//flush the buffer to immediately print
-	fflush(stdout);
+        // Delete "chat> " and print the msg.
+	      printf("\b\b\b\b\b\b%s            \n", buffer);
       }//end socket select       
     }//end loop
   }
