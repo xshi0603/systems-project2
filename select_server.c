@@ -70,6 +70,9 @@ int main() {
 
   //---------END ROOMS----------
 
+  printf("Server ready. Input a message to send to all connected clients\n");
+  fflush(stdout);
+
   while (1) {
 
     //select() modifies read_fds
@@ -276,7 +279,7 @@ int main() {
 	memcpy( subbuff2, &buffer[5], sizeof(subbuff2));
 	subbuff2[strlen(subbuff2)] = 0;
 	for (i = 0; i < subserver_count; i++) {
-	  write (subservers[i][WRITE], subbuff, sizeof(subbuff2));
+	  write (subservers[i][WRITE], subbuff2, sizeof(subbuff2));
 	}
       }
 
@@ -313,6 +316,9 @@ void subserver(int client_socket, int pipe1[], struct room* currRoom, int id) {
   char buffer2[BUFFER_SIZE];
   int pipe2;
 
+  char name[BUFFER_SIZE];
+  
+
   while (1) {
 
     pipe2 = currRoom->writingPipe;
@@ -345,13 +351,13 @@ void subserver(int client_socket, int pipe1[], struct room* currRoom, int id) {
     if (FD_ISSET(client_socket, &read_fds)) {
 
       read(client_socket, buffer, sizeof(buffer));      
-      if (!strcmp(buffer, "left")){
+      if (!strcmp(buffer, "/left")){
 	currRoom = moveRooms(currRoom, 1);
 	pipe2 = currRoom->writingPipe;
 	sprintf(buffer2, "%d_moving_%d", id, currRoom->id);
 	write(pipe2, buffer2, sizeof(buffer2));
       }
-      else if (!strcmp(buffer, "right")) {
+      else if (!strcmp(buffer, "/right")) {
 	currRoom = moveRooms(currRoom, 2);
 	pipe2 = currRoom->writingPipe;
 	sprintf(buffer2, "%d_moving_%d", id, currRoom->id);

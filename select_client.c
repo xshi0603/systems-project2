@@ -3,6 +3,7 @@
 int main(int argc, char **argv) {
   int server_socket;
   char buffer[BUFFER_SIZE];
+  char name[BUFFER_SIZE];
 
   fd_set read_fds;
 
@@ -10,6 +11,14 @@ int main(int argc, char **argv) {
     server_socket = client_setup( argv[1]);
   else
     server_socket = client_setup( TEST_IP );
+
+  printf("Please input your desired name:\n");
+
+  fgets(name, sizeof(name), stdin);
+  *strchr(name, '\n') = 0;
+
+  printf("Welcome %s!\n", name);
+  printf("Type anything to talk to your room. Type \"/left\" to move left or \"/right\" to move right. Preceed your message with \"/all\" to speak to all rooms.\n");
 
   while (1) {
 
@@ -38,8 +47,26 @@ int main(int argc, char **argv) {
 	write(server_socket, buffer, sizeof(buffer));
 	exit(0);
       }
-      else {
+      else if (!strcmp(buffer, "/left") || !strcmp(buffer, "/right") || !strcmp(buffer, "exit") || (strstr(buffer, "/all") != NULL) ) {
+	/*
+	char buffer2[BUFFER_SIZE];
+	memset(buffer2, 0, sizeof(buffer2));
+	strcat(buffer2, name);
+	strcat(buffer2, ":");
+	strcat(buffer2, buffer);
+	*/
 	write(server_socket, buffer, sizeof(buffer));
+	read(server_socket, buffer, sizeof(buffer));
+	printf("%s\n", buffer);
+      }
+      else {
+	char buffer2[BUFFER_SIZE];
+	memset(buffer2, 0, sizeof(buffer2));
+	strcat(buffer2, name);
+	strcat(buffer2, ":");
+	strcat(buffer2, buffer);
+
+	write(server_socket, buffer2, sizeof(buffer2));
 	read(server_socket, buffer, sizeof(buffer));
 	printf("%s\n", buffer);
       }
