@@ -270,7 +270,7 @@ int main() {
       }
 
       else {
-	printf("[main] writing to clients: %s\n", buffer);
+	//printf("[main] writing to clients: %s\n", buffer);
 	for (i = 0; i < subserver_count; i++) {
 	  if (subservers[i][2] == 2) {
 	    write (subservers[i][WRITE], buffer, sizeof(buffer));

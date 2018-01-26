@@ -40,7 +40,7 @@ int main(int argc, char **argv) {
     //this would allow for broadcast messages
     if (FD_ISSET(server_socket, &read_fds)) {
       read(server_socket, buffer, sizeof(buffer));
-      printf("[other user] [%s]\n", buffer);
+      printf("%s\n", buffer);
       printf("chat> ");
       //the above printf does not have \n
       //flush the buffer to immediately print
